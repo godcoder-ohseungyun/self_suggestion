@@ -1,33 +1,53 @@
-import 'dart:collection';
+import 'dart:convert';
 
-/**
- * 본문이 key
- * check 여부는 value
- */
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Suggestions {
-  Map<String, bool> suggestions = new HashMap();
+  SharedPreferences? _prefs;
+  Map<String, bool> suggestions = {};
 
-  //반드시 singleton 이어야한다
   static final Suggestions _instance = Suggestions._internal();
 
   factory Suggestions() {
     return _instance;
   }
 
-  Suggestions._internal();
+  Suggestions._internal() {
+    _init();
+  }
 
-  //TODO: unmodifiable exception 잡아야함
+  // shared_preferences 초기화
+  void _init() async {
+    _prefs = await SharedPreferences.getInstance();
+    String jsonString = _prefs!.getString('suggestions') ?? "";
+    if (jsonString.isNotEmpty) {
+      suggestions = Map<String, bool>.from(json.decode(jsonString));
+    }
+  }
+
+  // shared_preferences에 저장된 suggestions 맵을 가져오기
+  Future<Map<String, bool>> _getMapFromPrefs() async {
+    String jsonString = _prefs!.getString('suggestions') ?? "";
+    if (jsonString.isNotEmpty) {
+      return Map<String, bool>.from(json.decode(jsonString));
+    }
+    return {};
+  }
+
+  // suggestions 맵을 shared_preferences에 저장하기
+  void _saveToPrefs() async {
+    await _prefs!.setString('suggestions', json.encode(suggestions));
+  }
+
   Map<String, bool> get() {
     return Map<String, bool>.unmodifiable(suggestions);
   }
 
-  List<String> getKeyListOnlyValueTrue(){
-
+  List<String> getKeyListOnlyValueTrue() {
     List<String> list = List.unmodifiable(suggestions.entries
         .where((entry) => entry.value == true)
         .map((entry) => entry.key)
         .toList());
-
     return list;
   }
 
@@ -41,21 +61,22 @@ class Suggestions {
     }
     suggestions[text] = false;
 
-    //TODO: lOG
-    print(getEntriesList());
-
+    _saveToPrefs();
     return true;
   }
 
   remove(String key) {
     suggestions.remove(key);
+    _saveToPrefs();
   }
 
   check(String key) {
     suggestions[key] = true;
+    _saveToPrefs();
   }
 
   unCheck(String key) {
     suggestions[key] = false;
+    _saveToPrefs();
   }
 }
