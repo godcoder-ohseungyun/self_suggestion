@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/Suggestions.dart';
-import 'AlarmListScreen.dart';
+
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -143,13 +144,12 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: Icon(Icons.alarm, color: Colors.green),
             onPressed: () {
-              //GPT 추가
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AlarmListScreen(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => AlarmSetScreenTest(),
+              //   ),
+              // );
             },
           ),
           IconButton(
@@ -159,11 +159,23 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.menu, color: Colors.green),
-            onPressed: () {
-              // 햄버거 모양 아이콘 클릭 시 동작
+            icon: Icon(Icons.alarm_off, color: Colors.green),
+            onPressed: () async {
+
+              // await AlarmLogs().deleteAll();
+              //
+              // await FlutterLocalNotificationsPlugin().cancelAll();
+              //
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //   SnackBar(
+              //     content: Text('delete all alarm'),
+              //     duration: Duration(seconds: 1),
+              //     backgroundColor: Colors.grey,
+              //   ),
+              // );
             },
           ),
+
         ],
       ),
     );

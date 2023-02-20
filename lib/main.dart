@@ -6,9 +6,6 @@ import '/view/HomeScreen.dart';
 ///https://ksrapp.tistory.com/29
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await _initFlutterLocalNotificationsPlugin();
-
   runApp(MyApp());
 }
 
@@ -26,24 +23,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
-Future<void> _initFlutterLocalNotificationsPlugin() async {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
-
-  const AndroidInitializationSettings initializationSettingsAndroid =
-  AndroidInitializationSettings('@mipmap/ic_launcher');
-
-  final IOSInitializationSettings initializationSettingsIOS =
-  IOSInitializationSettings(
-    requestAlertPermission: false,
-    requestBadgePermission: false,
-    requestSoundPermission: false,
-  );
-
-  final InitializationSettings initializationSettings =
-  InitializationSettings(
-    android: initializationSettingsAndroid,
-    iOS: initializationSettingsIOS,
-  );
-}

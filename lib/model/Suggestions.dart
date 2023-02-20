@@ -5,7 +5,7 @@ import 'dart:collection';
  * check 여부는 value
  */
 class Suggestions {
-  final Map<String, bool> suggestions = new HashMap();
+  Map<String, bool> suggestions = new HashMap();
 
   //반드시 singleton 이어야한다
   static final Suggestions _instance = Suggestions._internal();
@@ -27,8 +27,6 @@ class Suggestions {
         .where((entry) => entry.value == true)
         .map((entry) => entry.key)
         .toList());
-
-    print(list);
 
     return list;
   }
