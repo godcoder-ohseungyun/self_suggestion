@@ -8,18 +8,12 @@ import Flutter
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
 
-    // iOS 10 or later
-    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-        // Enable or disable features based on authorization.
+    GeneratedPluginRegistrant.register(with: self)
+
+    if #available(iOS 10.0, *) {
+          UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
     }
 
-    application.registerForRemoteNotifications()
-
-    let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-    application.registerUserNotificationSettings(settings)
-    application.registerForRemoteNotifications()
-
-    GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }
