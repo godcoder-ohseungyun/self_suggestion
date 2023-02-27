@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../model/Suggestions.dart';
+import 'NotificationScreen.dart';
 
 
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -16,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        //화면 여백 SafeArea
+      //화면 여백 SafeArea
         child: Scaffold(
             appBar: buildAppBar(context),
             body: buildBody(suggestions, context),
@@ -144,12 +147,12 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: Icon(Icons.alarm, color: Colors.green),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => AlarmSetScreenTest(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotificationScreen(),
+                ),
+              );
             },
           ),
           IconButton(
@@ -161,18 +164,15 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: Icon(Icons.alarm_off, color: Colors.green),
             onPressed: () async {
+              await FlutterLocalNotificationsPlugin().cancelAll();
 
-              // await AlarmLogs().deleteAll();
-              //
-              // await FlutterLocalNotificationsPlugin().cancelAll();
-              //
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(
-              //     content: Text('delete all alarm'),
-              //     duration: Duration(seconds: 1),
-              //     backgroundColor: Colors.grey,
-              //   ),
-              // );
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('delete all alarm'),
+                  duration: Duration(seconds: 1),
+                  backgroundColor: Colors.grey,
+                ),
+              );
             },
           ),
 
