@@ -42,7 +42,7 @@ class _NotificationSetScreenState
     if (notificationMessages.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('처리할 알림이 없습니다.'),
+          content: Text('활성화된 문장이 없어요!'),
           duration: Duration(seconds: 1),
           backgroundColor: Colors.grey,
         ),
@@ -112,7 +112,7 @@ class _NotificationSetScreenState
                     await _saveNotification(selectedTime);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('save all alarm'),
+                        content: Text('알림 예약 완료!'),
                         duration: Duration(seconds: 1),
                         backgroundColor: Colors.grey,
                       ),
