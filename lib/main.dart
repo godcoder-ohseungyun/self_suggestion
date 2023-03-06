@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:self_suggestion/model/Suggestions.dart';
+import 'package:self_suggestion/util/TimzoneGenerator.dart';
 import '/view/HomeScreen.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 ///https://ksrapp.tistory.com/29
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  tz.initializeTimeZones();
 
   Suggestions();
+
+  await TimezoneGenerator.setCurrentTimezone();
 
   runApp(MyApp());
 }
