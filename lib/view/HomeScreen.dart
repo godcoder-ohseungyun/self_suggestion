@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/Suggestions.dart';
-
-
+import 'NotificationListScreen.dart';
+import 'NotificationSetScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -144,6 +144,12 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: Icon(Icons.alarm, color: Colors.green),
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotificationSetScreen(),
+                ),
+              );
             },
           ),
           IconButton(
@@ -154,10 +160,15 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           IconButton(
             icon: Icon(Icons.alarm_off, color: Colors.green),
-            onPressed: () {
+            onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotificationListScreen(),
+                ),
+              );
             },
           ),
-
         ],
       ),
     );
