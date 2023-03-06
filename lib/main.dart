@@ -5,12 +5,15 @@ import '/view/HomeScreen.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import 'model/Notifications.dart';
+
 ///https://ksrapp.tistory.com/29
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   tz.initializeTimeZones();
 
   Suggestions();
+  Notifications();
 
   await TimezoneGenerator.setCurrentTimezone();
 

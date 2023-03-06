@@ -4,6 +4,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
 import '../util/TimzoneGenerator.dart';
+import 'Notifications.dart';
 
 class OfflineNotification {
   OfflineNotification();
@@ -90,6 +91,8 @@ class OfflineNotification {
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
     );
+
+    Notifications().add(selectedTime, id);
 
   }
 
