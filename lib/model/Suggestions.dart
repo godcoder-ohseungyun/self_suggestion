@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:self_suggestion/util/NotificationManager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /**
@@ -58,18 +59,26 @@ class Suggestions {
   }
 
   remove(String key) {
-    suggestions.remove(key);
-    _savePrefs();
+    if(suggestions[key]==true){
+      suggestions.remove(key);
+      NotificationManager.resaveNotifications();
+      _savePrefs();
+    }else {
+      suggestions.remove(key);
+      _savePrefs();
+    }
   }
 
   check(String key) {
     suggestions[key] = true;
     _savePrefs();
+    NotificationManager.resaveNotifications();
   }
 
   unCheck(String key) {
     suggestions[key] = false;
     _savePrefs();
+    NotificationManager.resaveNotifications();
   }
 
   void _savePrefs() {
