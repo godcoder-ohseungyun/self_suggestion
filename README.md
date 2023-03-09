@@ -40,3 +40,17 @@
 + Suggestions initial
 + Notifications initial
 + OfflineNotifications initial
+
+</br>
+
+자기 암시 문구를 추천하는 기능(or 개발자 인스타 계정으로 유도한다)
++ 자기 암시 추천 문구를 선택하면, 사용자 목록에 저장되어야 한다
++ 사용자 목록에 저장되었더라도 활성화는 사용자가 직접 해야한다
+
+앱 가이드 페이지 만들기
+
+앱 후원 페이지 만들기
+
+앱 아이콘 만들기
+
+앱 작명 및 알림 제목 수정하기
