@@ -5,6 +5,7 @@ import '../model/Suggestions.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import '../model/OfflineNotification.dart';
+import '../util/NotificationManager.dart';
 
 class NotificationSetScreen extends StatefulWidget {
 
@@ -27,42 +28,11 @@ class _NotificationSetScreenState
 
   @override
   void initState() {
+    super.initState();
     offlineNotification = new OfflineNotification();
-    offlineNotification.intialize();
+    //offlineNotification.intialize();
     suggestions = new Suggestions();
     currentTimeZone = TimezoneGenerator.getCurrentTimezone();
-    super.initState();
-  }
-
-  Future<void> _saveNotification(tz.TZDateTime selectedTime) async {
-    // 알림 내용을 가져옴
-    List<String> notificationMessages = suggestions.getKeyListOnlyValueTrue();
-
-    // 알림 내용이 없으면 리턴
-    if (notificationMessages.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('활성화된 문장이 없어요!'),
-          duration: Duration(seconds: 1),
-          backgroundColor: Colors.grey,
-        ),
-      );
-      return;
-    }
-
-    // 알림 등록
-    for (var i = 0; i < notificationMessages.length; i++) {
-      // index를 더해, 중복 시간에도 고유하도록 설정
-      // microsecondsSinceEpoch를 써야 32비트 이내 범위를 가짐
-      //notificationId를 1초마다 1씩 증가하는 정수형 변수로 설정
-      //타임존을 설정하기보다 현재 기기시간을 밀리초까지 분해하여 indx 를 더함
-      var notificationId = selectedTime.millisecondsSinceEpoch ~/ 1000 + i;
-      await offlineNotification.showScheduledNotification(
-          id: notificationId,
-          title: '안녕',
-          body: notificationMessages[i],
-          selectedTime: selectedTime);
-    }
   }
 
   @override
@@ -109,7 +79,15 @@ class _NotificationSetScreenState
                 // "저장" 버튼
                 ElevatedButton(
                   onPressed: () async {
-                    await _saveNotification(selectedTime);
+                    if(!await NotificationManager.saveNotification(selectedTime)){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('활성화된 알림이 존재하지 않습니다'),
+                          duration: Duration(seconds: 1),
+                          backgroundColor: Colors.grey,
+                        ),
+                      );
+                    }
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('알림 예약 완료!'),

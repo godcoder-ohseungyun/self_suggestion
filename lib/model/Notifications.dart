@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../util/TimzoneGenerator.dart';
 import 'OfflineNotification.dart';
 
 /**
@@ -22,9 +23,31 @@ class Notifications {
   }
 
   Notifications._internal() {
+    _loadNotifications();
     _offlineNotification = OfflineNotification();
     _offlineNotification.intialize();
-    _loadNotifications();
+  }
+
+  List<tz.TZDateTime> getNotificationTimes() {
+    List<String> keys = notifications.keys.toList();
+    List<tz.TZDateTime> times = [];
+
+    // Get the current date in the device's timezone
+    tz.TZDateTime currentDate =
+    tz.TZDateTime.now(tz.getLocation(TimezoneGenerator.getCurrentTimezone()));
+
+    for (String key in keys) {
+      List<String> parts = key.split(':');
+      int hour = int.parse(parts[0]);
+      int minute = int.parse(parts[1]);
+
+      // Create a new TZDateTime object for the current date with the hour and minute from the key
+      tz.TZDateTime time = tz.TZDateTime(currentDate.location, currentDate.year,
+          currentDate.month, currentDate.day, hour, minute);
+      times.add(time);
+    }
+
+    return times;
   }
 
   add(tz.TZDateTime key, int id) {
