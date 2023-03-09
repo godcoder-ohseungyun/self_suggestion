@@ -37,22 +37,29 @@ class OfflineNotification {
     );
   }
 
+  Future<void> cacelAllNotifications() async {
+    await _localNotificationService.cancelAll();
+  }
+
   Future<NotificationDetails> _notificationDetails() async {
     const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('channel_id', 'channel_name',
-            channelDescription: 'description',
-            importance: Importance.max,
-            priority: Priority.max,
-            playSound: true);
+    AndroidNotificationDetails('channel_id', 'channel_name',
+        channelDescription: 'description',
+        importance: Importance.max,
+        priority: Priority.max,
+        playSound: true,
+        groupKey: null,
+        setAsGroupSummary: false);
 
     const IOSNotificationDetails iosNotificationDetails =
-        IOSNotificationDetails();
+    IOSNotificationDetails(presentAlert: true, presentBadge: true, presentSound: true);
 
     return const NotificationDetails(
       android: androidNotificationDetails,
       iOS: iosNotificationDetails,
     );
   }
+
 
   Future<void> showNotification({
     required int id,
