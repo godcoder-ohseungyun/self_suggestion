@@ -6,12 +6,15 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 import 'model/Notifications.dart';
+import 'model/OfflineNotification.dart';
 
 ///https://ksrapp.tistory.com/29
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   tz.initializeTimeZones();
 
+  OfflineNotification offlineNotification = new OfflineNotification();
+  offlineNotification.intialize();
   Suggestions();
   Notifications();
 
