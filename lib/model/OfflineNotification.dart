@@ -7,7 +7,12 @@ import '../util/TimzoneGenerator.dart';
 import 'Notifications.dart';
 
 class OfflineNotification {
-  OfflineNotification();
+
+  static final OfflineNotification _singleton = OfflineNotification._internal();
+
+  factory OfflineNotification() => _singleton;
+
+  OfflineNotification._internal();
 
   final _localNotificationService = FlutterLocalNotificationsPlugin();
 
@@ -37,9 +42,6 @@ class OfflineNotification {
     );
   }
 
-  Future<void> cacelAllNotifications() async {
-    await _localNotificationService.cancelAll();
-  }
 
   Future<NotificationDetails> _notificationDetails() async {
     const AndroidNotificationDetails androidNotificationDetails =
@@ -126,10 +128,10 @@ class OfflineNotification {
   }
 
   Future<void> cancelNotificationById(int id) async {
-    try {
       await _localNotificationService.cancel(id);
-    }catch(e){
+  }
 
-    }
+  Future<void> cancelAllNotifications() async {
+      await _localNotificationService.cancelAll();
   }
 }

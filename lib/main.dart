@@ -13,8 +13,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   tz.initializeTimeZones();
 
-  OfflineNotification offlineNotification = new OfflineNotification();
-  offlineNotification.intialize();
+  await OfflineNotification().intialize();
+  
   Suggestions();
   Notifications();
 
