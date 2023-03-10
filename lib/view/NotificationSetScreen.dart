@@ -6,19 +6,20 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import '../model/OfflineNotification.dart';
 import '../util/NotificationManager.dart';
+import 'commonConstant/CommonMSGConstant.dart';
 
 class NotificationSetScreen extends StatefulWidget {
-
-  const NotificationSetScreen({Key? key})
-      : super(key: key);
+  const NotificationSetScreen({Key? key}) : super(key: key);
 
   @override
-  State<NotificationSetScreen> createState() =>
-      _NotificationSetScreenState();
+  State<NotificationSetScreen> createState() => _NotificationSetScreenState();
 }
 
-class _NotificationSetScreenState
-    extends State<NotificationSetScreen> {
+class _NotificationSetScreenState extends State<NotificationSetScreen> {
+
+  static final String NO_ACTIVATED_SUGGETIONS_MSG = "활성화된 문구가 없습니다.";
+  static final String RESERVATION_COMPLETE_MSG = "알림 예약 완료!";
+
   late final Suggestions suggestions;
   late final OfflineNotification offlineNotification;
 
@@ -41,7 +42,7 @@ class _NotificationSetScreenState
     now = tz.TZDateTime.now(tz.getLocation(currentTimeZone));
     return Scaffold(
       appBar: AppBar(
-        title: Text('알림 센터'),
+        title: Text(CommonMSGConstant.APP_BAR_TITLE),
       ),
       body: Stack(
         children: [
@@ -79,24 +80,27 @@ class _NotificationSetScreenState
                 // "저장" 버튼
                 ElevatedButton(
                   onPressed: () async {
-                    if(!await NotificationManager.saveNotification(selectedTime)){
+                    if (!await NotificationManager.saveNotification(
+                        selectedTime)) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('활성화된 알림이 존재하지 않습니다'),
+                          content: Text(NO_ACTIVATED_SUGGETIONS_MSG),
+                          duration: Duration(seconds: 1),
+                          backgroundColor: Colors.grey,
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(RESERVATION_COMPLETE_MSG),
                           duration: Duration(seconds: 1),
                           backgroundColor: Colors.grey,
                         ),
                       );
                     }
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('알림 예약 완료!'),
-                        duration: Duration(seconds: 1),
-                        backgroundColor: Colors.grey,
-                      ),
-                    );
                   },
-                  child: Text('저장', style: TextStyle(color: Colors.white)),
+                  child: Text(CommonMSGConstant.SAVE,
+                      style: TextStyle(color: Colors.white)),
                   style: ElevatedButton.styleFrom(
                     primary: Colors.lightBlue,
                     fixedSize: null,
