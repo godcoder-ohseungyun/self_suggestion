@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:self_suggestion/view/commonConstant/CommonMSGConstant.dart';
 import '../model/Suggestions.dart';
 import 'NotificationListScreen.dart';
 import 'NotificationSetScreen.dart';
@@ -13,6 +14,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final Suggestions suggestions = new Suggestions();
 
+  static final String BODY_WELCOME_MSG = "나의 마음들을 채워볼까요?";
+  static final String DIALOG_TITLE = "매일 되새길 마음을 적어주세요";
+  static final String DIALOG_EXPLAIN_MSG = "write it here";
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,7 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
   PreferredSizeWidget buildAppBar(BuildContext context) {
     return AppBar(
       elevation: MediaQuery.of(context).size.height / 10,
-      title: Text('Header'),
+      title: Text(CommonMSGConstant.APP_BAR_TITLE),
+      backgroundColor: Color.fromRGBO(11,27,50,1.0),
       actions: [
         IconButton(
           icon: Icon(Icons.person),
@@ -38,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget buildBody(Suggestions suggestions, BuildContext context) {
     if (suggestions.getEntriesList().isEmpty)
-      return Center(child: Text('Welcome!'));
+      return Center(child: Text(BODY_WELCOME_MSG));
 
     return ListView.builder(
       itemCount: suggestions.getEntriesList().length,
@@ -56,45 +62,51 @@ class _HomeScreenState extends State<HomeScreen> {
       background: buildDismissibleBackground(),
       onDismissed: (direction) {
         suggestions.remove(nowEntry.key);
-        setState(() {
-        });
+        setState(() {});
       },
-      //direction: DismissDirection.endToStart,
       child: buildSuggestionPart(nowEntry),
     );
   }
 
   Widget buildDismissibleBackground() {
-    return GestureDetector(
-      onTap: () {
-        // 삭제 버튼이 눌렸을 때 실행되는 코드
-      },
-      child: Container(
-        color: Colors.red,
-        child: Stack(
-          children: [
-            Center(
-              child: Icon(
-                Icons.delete,
-                color: Colors.white,
-                size: 30.0,
-              ),
-            ),
-            Positioned(
-              bottom: 10.0,
-              left: 0,
-              right: 0,
-              child: Text(
-                "Delete",
-                textAlign: TextAlign.center,
-                style: TextStyle(
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.black,
+          width: 1.0,
+        ),
+      ),
+      child: GestureDetector(
+        onTap: () {
+          // 삭제 버튼이 눌렸을 때 실행되는 코드
+        },
+        child: Container(
+          color: Colors.redAccent,
+          child: Stack(
+            children: [
+              Center(
+                child: Icon(
+                  Icons.delete,
                   color: Colors.white,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
+                  size: 30.0,
                 ),
               ),
-            ),
-          ],
+              Positioned(
+                bottom: 10.0,
+                left: 0,
+                right: 0,
+                child: Text(
+                  CommonMSGConstant.DELETE_MSG,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -102,9 +114,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget buildSuggestionPart(MapEntry<String, bool> nowEntry) {
     return Container(
-      width: double.infinity,
-      height: double.infinity,
-      color: Colors.blue,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.black,
+          width: 1.0,
+        ),
+      ),
       child: buildSuggestionsTile(nowEntry),
     );
   }
@@ -117,6 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
 
   Widget buildCheckbox(MapEntry<String, bool> nowEntry) {
     return Checkbox(
@@ -135,14 +151,17 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+
+
   Widget buildBottomAppBar(Suggestions suggestions) {
     return BottomAppBar(
       height: MediaQuery.of(context).size.height / 10,
+      color: Color.fromRGBO(11,27,50,1.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-            icon: Icon(Icons.alarm, color: Colors.green),
+            icon: Icon(Icons.alarm, color: Colors.white),
             onPressed: () {
               Navigator.push(
                 context,
@@ -153,13 +172,13 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.add_circle, color: Colors.green),
+            icon: Icon(Icons.add_circle, color: Colors.white),
             onPressed: () {
               _showAddEntryDialog(context);
             },
           ),
           IconButton(
-            icon: Icon(Icons.alarm_off, color: Colors.green),
+            icon: Icon(Icons.alarm_off, color: Colors.white),
             onPressed: () async {
               Navigator.push(
                 context,
@@ -180,22 +199,22 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add New Entry'),
+          title: Text(DIALOG_TITLE),
           content: TextFormField(
-            decoration: InputDecoration(hintText: 'Type your message here'),
+            decoration: InputDecoration(hintText: DIALOG_EXPLAIN_MSG),
             onChanged: (value) {
               newEntry = value;
             },
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('CANCEL'),
+              child: Text(CommonMSGConstant.CANCEL),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('ADD'),
+              child: Text(CommonMSGConstant.SAVE),
               onPressed: () {
                 if (newEntry.isNotEmpty) {
                   setState(() {
