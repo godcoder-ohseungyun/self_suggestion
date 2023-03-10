@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:self_suggestion/view/commonConstant/CommonMSGConstant.dart';
 
 import '../model/Notifications.dart';
 import 'NotificationSetScreen.dart';
@@ -26,7 +27,7 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
   PreferredSizeWidget buildAppBar(BuildContext context) {
     return AppBar(
       elevation: MediaQuery.of(context).size.height / 10,
-      title: Text('Header'),
+      title: Text(CommonMSGConstant.APP_BAR_TITLE),
       actions: [
         IconButton(
           icon: Icon(Icons.person),
@@ -37,7 +38,7 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
   }
 
   Widget buildBody(Notifications notifications, BuildContext context) {
-    if (notifications.get().isEmpty) return Center(child: Text('Welcome!'));
+    if (notifications.get().isEmpty) return Center(child: Text(''));
 
     return ListView.builder(
       itemCount: notifications.get().length,
@@ -83,7 +84,7 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
               left: 0,
               right: 0,
               child: Text(
-                "Delete",
+                CommonMSGConstant.DELETE_MSG,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
