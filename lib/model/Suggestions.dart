@@ -58,10 +58,10 @@ class Suggestions {
     return true;
   }
 
-  remove(String key) {
+  remove(String key) async {
     if(suggestions[key]==true){
       suggestions.remove(key);
-      NotificationManager.resaveNotifications();
+      await NotificationManager.resaveNotifications();
       _savePrefs();
     }else {
       suggestions.remove(key);
@@ -69,16 +69,16 @@ class Suggestions {
     }
   }
 
-  check(String key) {
+  check(String key) async {
     suggestions[key] = true;
     _savePrefs();
-    NotificationManager.resaveNotifications();
+    await NotificationManager.resaveNotifications();
   }
 
-  unCheck(String key) {
+  unCheck(String key) async {
     suggestions[key] = false;
     _savePrefs();
-    NotificationManager.resaveNotifications();
+    await NotificationManager.resaveNotifications();
   }
 
   void _savePrefs() {
