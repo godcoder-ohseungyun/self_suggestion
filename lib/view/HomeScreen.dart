@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Color.fromRGBO(11,27,50,1.0),
       actions: [
         IconButton(
-          icon: Icon(Icons.person),
+          icon: Icon(Icons.menu),
           onPressed: () {},
         ),
       ],
@@ -71,9 +71,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget buildDismissibleBackground() {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.black,
-          width: 1.0,
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.black,
+            width: 1.0,
+          ),
         ),
       ),
       child: GestureDetector(
@@ -115,9 +117,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget buildSuggestionPart(MapEntry<String, bool> nowEntry) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.black,
-          width: 1.0,
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.black,
+            width: 1.0,
+          ),
         ),
       ),
       child: buildSuggestionsTile(nowEntry),
