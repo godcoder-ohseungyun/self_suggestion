@@ -8,7 +8,7 @@ class NotificationManager{
 
   static final Suggestions suggestions = Suggestions();
   static final Notifications notifications = Notifications();
-  static final OfflineNotification offlineNotification = new OfflineNotification();
+  static final OfflineNotification offlineNotification =  OfflineNotification();
 
   static Future<bool> saveNotification(tz.TZDateTime selectedTime) async {
     // 알림 내용을 가져옴
@@ -33,7 +33,7 @@ class NotificationManager{
 
   static Future<void> resaveNotifications() async {
 
-    offlineNotification.cacelAllNotifications();
+    await offlineNotification.cancelAllNotifications();
 
     for(tz.TZDateTime time in notifications.getNotificationTimes()){
       await saveNotification(time);
