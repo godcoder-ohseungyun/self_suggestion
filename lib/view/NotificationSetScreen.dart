@@ -43,6 +43,7 @@ class _NotificationSetScreenState extends State<NotificationSetScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(CommonMSGConstant.APP_BAR_TITLE),
+        backgroundColor: Color.fromRGBO(11,27,50,1.0),
       ),
       body: Stack(
         children: [
@@ -102,7 +103,7 @@ class _NotificationSetScreenState extends State<NotificationSetScreen> {
                   child: Text(CommonMSGConstant.SAVE,
                       style: TextStyle(color: Colors.white)),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.lightBlue,
+                    primary: Color.fromRGBO(11,27,50,1.0),
                     fixedSize: null,
                     padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                   ),
