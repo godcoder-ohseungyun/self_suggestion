@@ -25,13 +25,15 @@ class _HomeScreenState extends State<HomeScreen> {
       //화면 여백 SafeArea
         child: Scaffold(
             appBar: buildAppBar(context),
-            body: buildBody(suggestions, context),
+            body: Container(
+              //color: Colors.white,
+              child : buildBody(suggestions, context)
+            ),
             bottomNavigationBar: buildBottomAppBar()));
   }
 
   PreferredSizeWidget buildAppBar(BuildContext context) {
     return AppBar(
-      elevation: MediaQuery.of(context).size.height / 10,
       title: Text(CommonMSGConstant.APP_BAR_TITLE),
       backgroundColor: Color.fromRGBO(11,27,50,1.0),
       leading: IconButton(

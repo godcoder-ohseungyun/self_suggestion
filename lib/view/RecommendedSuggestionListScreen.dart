@@ -30,7 +30,6 @@ class _RecommendedSuggestionListScreenState extends State<RecommendedSuggestionL
 
   PreferredSizeWidget buildAppBar(BuildContext context) {
     return AppBar(
-      elevation: MediaQuery.of(context).size.height / 10,
       title: Text(CommonMSGConstant.APP_BAR_TITLE),
       backgroundColor: Color.fromRGBO(11,27,50,1.0),
       leading: IconButton(
