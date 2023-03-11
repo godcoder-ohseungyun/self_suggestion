@@ -16,26 +16,27 @@ class _HomeScreenState extends State<HomeScreen> {
   final Suggestions suggestions = new Suggestions();
 
   static final String BODY_WELCOME_MSG = "반가워요! 나의 마음들을 채워볼까요?";
+  static final String NEW_LINE = "\n";
+  static final String BODY_GUIDE_MSG_COMMON = "좌측 상단에 '책 아이콘'을 누르면, 현재 탭의 사용법을 볼 수 있어요!";
   static final String DIALOG_TITLE = "매일 되새길 마음을 적어주세요";
   static final String DIALOG_EXPLAIN_MSG = "write it here";
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      //화면 여백 SafeArea
+        //화면 여백 SafeArea
         child: Scaffold(
             appBar: buildAppBar(context),
             body: Container(
-              //color: Colors.white,
-              child : buildBody(suggestions, context)
-            ),
+                //color: Colors.white,
+                child: buildBody(suggestions, context)),
             bottomNavigationBar: buildBottomAppBar()));
   }
 
   PreferredSizeWidget buildAppBar(BuildContext context) {
     return AppBar(
       title: Text(CommonMSGConstant.APP_BAR_TITLE),
-      backgroundColor: Color.fromRGBO(11,27,50,1.0),
+      backgroundColor: Color.fromRGBO(11, 27, 50, 1.0),
       leading: IconButton(
         icon: Icon(Icons.menu_book),
         onPressed: () {
@@ -60,7 +61,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget buildBody(Suggestions suggestions, BuildContext context) {
     if (suggestions.getEntriesList().isEmpty)
-      return Center(child: Text(BODY_WELCOME_MSG));
+      return Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(BODY_WELCOME_MSG,style:TextStyle(fontFamily:'NanumPen',fontSize: MediaQuery.of(context).size.width / 20, fontWeight: FontWeight.bold)),
+          Text(NEW_LINE),
+          Text(BODY_GUIDE_MSG_COMMON ,style:TextStyle(fontFamily:'NanumPen',fontSize: MediaQuery.of(context).size.width / 20, fontWeight: FontWeight.bold)),
+        ],
+      ));
 
     return ListView.builder(
       itemCount: suggestions.getEntriesList().length,
@@ -139,7 +148,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
   Widget buildCheckbox(MapEntry<String, bool> nowEntry) {
     return Checkbox(
       value: nowEntry.value,
@@ -157,12 +165,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
-
   Widget buildBottomAppBar() {
     return BottomAppBar(
       height: MediaQuery.of(context).size.height / 10,
-      color: Color.fromRGBO(11,27,50,1.0),
+      color: Color.fromRGBO(11, 27, 50, 1.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
