@@ -35,18 +35,19 @@
 
 </br>
 
-**추천 자기 암시 문구를 제공하는 기능**
+~~**추천 자기 암시 문구를 제공하는 기능**~~ HomeScreen - RecommendedSuggestionListScreen - RecommendedSuggestions - assets/txt/.txt
 + 추천 자기 암시 문구를 사용자가 스와이프시 사용자 목록에 자동으로 추기된다
 + 사용자 목록에 저장되었더라도 활성화는 사용자가 직접 해야한다
 
 
 </br>
 
-**main에서 싱글톤 객체들을 호출해 초기화 작업을 완수한다** 
+~~**main에서 싱글톤 객체들을 호출해 초기화 작업을 완수한다**~~ 
 + 기기 타임 데이터 초기화 및 타임존 추적 기능, 정확한 기기의 타임정보가 필요한 경우 TimzoneGenerator로 부터 타임 존을 불러와 사용한다
 + Suggestions initial
 + Notifications initial
 + OfflineNotifications initial
++ RecommendedSuggestions initial
 
 </br>
 
@@ -54,7 +55,7 @@
 
 앱 후원 페이지 만들기
 
-앱 아이콘 만들기
+~~앱 아이콘 만들기~~
 
 ~~앱 작명 및 알림 제목 수정하기~~
 
