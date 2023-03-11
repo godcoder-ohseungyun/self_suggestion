@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final Suggestions suggestions = new Suggestions();
 
-  static final String BODY_WELCOME_MSG = "나의 마음들을 채워볼까요?";
+  static final String BODY_WELCOME_MSG = "반가워요! 나의 마음들을 채워볼까요?";
   static final String DIALOG_TITLE = "매일 되새길 마음을 적어주세요";
   static final String DIALOG_EXPLAIN_MSG = "write it here";
 
@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
             appBar: buildAppBar(context),
             body: buildBody(suggestions, context),
-            bottomNavigationBar: buildBottomAppBar(suggestions)));
+            bottomNavigationBar: buildBottomAppBar()));
   }
 
   PreferredSizeWidget buildAppBar(BuildContext context) {
@@ -34,11 +34,17 @@ class _HomeScreenState extends State<HomeScreen> {
       elevation: MediaQuery.of(context).size.height / 10,
       title: Text(CommonMSGConstant.APP_BAR_TITLE),
       backgroundColor: Color.fromRGBO(11,27,50,1.0),
+      leading: IconButton(
+        icon: Icon(Icons.menu_book),
+        onPressed: () {
+          // Add your onPressed logic here
+        },
+      ),
       actions: [
         IconButton(
           icon: Icon(Icons.menu),
           onPressed: () {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => RecommendedSuggestionListScreen(),
@@ -151,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
-  Widget buildBottomAppBar(Suggestions suggestions) {
+  Widget buildBottomAppBar() {
     return BottomAppBar(
       height: MediaQuery.of(context).size.height / 10,
       color: Color.fromRGBO(11,27,50,1.0),
@@ -161,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: Icon(Icons.alarm, color: Colors.white),
             onPressed: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => NotificationSetScreen(),
@@ -170,15 +176,15 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.add_circle, color: Colors.white),
+            icon: Icon(Icons.add_circle, color: Colors.blueAccent),
             onPressed: () {
               _showAddEntryDialog(context);
             },
           ),
           IconButton(
             icon: Icon(Icons.alarm_off, color: Colors.white),
-            onPressed: () async {
-              Navigator.push(
+            onPressed: () {
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => NotificationListScreen(),

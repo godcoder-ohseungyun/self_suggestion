@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:self_suggestion/view/commonConstant/CommonMSGConstant.dart';
 
 import '../model/Notifications.dart';
+import 'HomeScreen.dart';
 import 'NotificationSetScreen.dart';
 
 class NotificationListScreen extends StatefulWidget {
@@ -21,14 +22,22 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
         child: Scaffold(
       appBar: buildAppBar(context),
       body: buildBody(notifications, context),
-    ));
+          bottomNavigationBar: buildBottomAppBar(),
+
+        ));
   }
 
   PreferredSizeWidget buildAppBar(BuildContext context) {
     return AppBar(
       elevation: MediaQuery.of(context).size.height / 10,
       title: Text(CommonMSGConstant.APP_BAR_TITLE),
-      backgroundColor: Color.fromRGBO(11,27,50,1.0),
+      backgroundColor: Color.fromRGBO(11, 27, 50, 1.0),
+      leading: IconButton(
+        icon: Icon(Icons.menu_book),
+        onPressed: () {
+          // Add your onPressed logic here
+        },
+      ),
     );
   }
 
@@ -108,6 +117,47 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
     return Center(
       child: ListTile(
         title: Text(key),
+      ),
+    );
+  }
+
+
+  Widget buildBottomAppBar() {
+    return BottomAppBar(
+      height: MediaQuery.of(context).size.height / 10,
+      color: Color.fromRGBO(11,27,50,1.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          IconButton(
+            icon: Icon(Icons.alarm, color: Colors.white),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotificationSetScreen(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.home, color: Colors.white),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.alarm_off, color: Colors.blueAccent),
+            onPressed: () {
+
+            },
+          ),
+        ],
       ),
     );
   }

@@ -6,6 +6,8 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import '../model/OfflineNotification.dart';
 import '../util/NotificationManager.dart';
+import 'HomeScreen.dart';
+import 'NotificationListScreen.dart';
 import 'commonConstant/CommonMSGConstant.dart';
 
 class NotificationSetScreen extends StatefulWidget {
@@ -44,6 +46,12 @@ class _NotificationSetScreenState extends State<NotificationSetScreen> {
       appBar: AppBar(
         title: Text(CommonMSGConstant.APP_BAR_TITLE),
         backgroundColor: Color.fromRGBO(11,27,50,1.0),
+        leading: IconButton(
+          icon: Icon(Icons.menu_book),
+          onPressed: () {
+            // Add your onPressed logic here
+          },
+        ),
       ),
       body: Stack(
         children: [
@@ -110,6 +118,49 @@ class _NotificationSetScreenState extends State<NotificationSetScreen> {
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: buildBottomAppBar(),
+    );
+  }
+
+
+
+  Widget buildBottomAppBar() {
+    return BottomAppBar(
+      height: MediaQuery.of(context).size.height / 10,
+      color: Color.fromRGBO(11,27,50,1.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          IconButton(
+            icon: Icon(Icons.alarm, color: Colors.blueAccent),
+            onPressed: () {
+
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.home, color: Colors.white),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.alarm_off, color: Colors.white),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotificationListScreen(),
+                ),
+              );
+            },
           ),
         ],
       ),

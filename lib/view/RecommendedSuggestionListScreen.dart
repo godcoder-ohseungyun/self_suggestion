@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:self_suggestion/view/HomeScreen.dart';
 import 'package:self_suggestion/view/commonConstant/CommonMSGConstant.dart';
 
 import '../model/Notifications.dart';
 import '../model/RecommendedSuggestions.dart';
+import 'NotificationListScreen.dart';
+import 'NotificationSetScreen.dart';
 
 class RecommendedSuggestionListScreen extends StatefulWidget {
   const RecommendedSuggestionListScreen({Key? key}) : super(key: key);
@@ -21,6 +24,7 @@ class _RecommendedSuggestionListScreenState extends State<RecommendedSuggestionL
         child: Scaffold(
           appBar: buildAppBar(context),
           body: buildBody(recommendedSuggestions, context),
+          bottomNavigationBar: buildBottomAppBar(),
         ));
   }
 
@@ -29,17 +33,30 @@ class _RecommendedSuggestionListScreenState extends State<RecommendedSuggestionL
       elevation: MediaQuery.of(context).size.height / 10,
       title: Text(CommonMSGConstant.APP_BAR_TITLE),
       backgroundColor: Color.fromRGBO(11,27,50,1.0),
+      leading: IconButton(
+        icon: Icon(Icons.menu_book),
+        onPressed: () {
+          // Add your onPressed logic here
+        },
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.menu, color: Colors.blueAccent),
+          onPressed: () {
+          },
+        ),
+      ],
     );
   }
 
   Widget buildBody(RecommendedSuggestions recommendedSuggestions, BuildContext context) {
-    if (recommendedSuggestions.get().isEmpty) return Center(child: Text(''));
+    if (recommendedSuggestions.getByRandomly().isEmpty) return Center(child: Text(''));
 
     return ListView.builder(
-      itemCount: recommendedSuggestions.get().length,
+      itemCount: recommendedSuggestions.getByRandomly().length,
       itemExtent: MediaQuery.of(context).size.height / 10,
       itemBuilder: (BuildContext context, int index) {
-        final key = recommendedSuggestions.get()[index];
+        final key = recommendedSuggestions.getByRandomly()[index];
         return buildRecommendedSuggestionsByDismissible(key,index);
       },
     );
@@ -109,6 +126,53 @@ class _RecommendedSuggestionListScreenState extends State<RecommendedSuggestionL
     return Center(
       child: ListTile(
         title: Text(key),
+      ),
+    );
+  }
+
+
+
+  Widget buildBottomAppBar() {
+    return BottomAppBar(
+      height: MediaQuery.of(context).size.height / 10,
+      color: Color.fromRGBO(11,27,50,1.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          IconButton(
+            icon: Icon(Icons.alarm, color: Colors.white),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotificationSetScreen(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.home, color: Colors.white),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.alarm_off, color: Colors.white),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotificationListScreen(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
