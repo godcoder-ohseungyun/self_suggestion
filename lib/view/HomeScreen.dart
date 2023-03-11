@@ -3,6 +3,7 @@ import 'package:self_suggestion/view/commonConstant/CommonMSGConstant.dart';
 import '../model/Suggestions.dart';
 import 'NotificationListScreen.dart';
 import 'NotificationSetScreen.dart';
+import 'RecommendedSuggestionListScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -36,7 +37,14 @@ class _HomeScreenState extends State<HomeScreen> {
       actions: [
         IconButton(
           icon: Icon(Icons.menu),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecommendedSuggestionListScreen(),
+              ),
+            );
+          },
         ),
       ],
     );
@@ -91,20 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.delete,
                   color: Colors.white,
                   size: 30.0,
-                ),
-              ),
-              Positioned(
-                bottom: 10.0,
-                left: 0,
-                right: 0,
-                child: Text(
-                  CommonMSGConstant.DELETE_MSG,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
               ),
             ],
