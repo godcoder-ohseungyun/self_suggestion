@@ -7,6 +7,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 import 'model/Notifications.dart';
 import 'model/OfflineNotification.dart';
+import 'model/RecommendedSuggestions.dart';
 
 ///https://ksrapp.tistory.com/29
 void main() async {
@@ -17,6 +18,8 @@ void main() async {
   
   Suggestions();
   Notifications();
+
+  await RecommendedSuggestions().callRecommendedSuggestions();
 
   await TimezoneGenerator.setCurrentTimezone();
 
