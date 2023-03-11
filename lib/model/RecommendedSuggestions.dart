@@ -1,5 +1,6 @@
 import 'package:self_suggestion/model/Suggestions.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'dart:math';
 
 class RecommendedSuggestions {
 
@@ -18,17 +19,16 @@ class RecommendedSuggestions {
 
   //반드시 앱 실행 시점에 호출 해야함
   Future<void> callRecommendedSuggestions() async {
-    final fileContent = await rootBundle.loadString('txt/recommendedSuggestions.txt');
+    final fileContent = await rootBundle.loadString('assets/txts/recommendedSuggestions.txt');
 
     recommendedSuggestions = fileContent.split('\n');
   }
-
 
   void addToSuggestions(int index){
     suggestions.add(recommendedSuggestions[index]);
   }
 
-  List<String> get(){
+  List<String> get() {
     return List.unmodifiable(recommendedSuggestions);
   }
 

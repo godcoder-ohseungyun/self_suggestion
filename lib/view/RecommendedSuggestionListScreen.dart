@@ -50,13 +50,13 @@ class _RecommendedSuggestionListScreenState extends State<RecommendedSuggestionL
   }
 
   Widget buildBody(RecommendedSuggestions recommendedSuggestions, BuildContext context) {
-    if (recommendedSuggestions.getByRandomly().isEmpty) return Center(child: Text(''));
+    if (recommendedSuggestions.get().isEmpty) return Center(child: Text(''));
 
     return ListView.builder(
-      itemCount: recommendedSuggestions.getByRandomly().length,
+      itemCount: recommendedSuggestions.get().length,
       itemExtent: MediaQuery.of(context).size.height / 10,
       itemBuilder: (BuildContext context, int index) {
-        final key = recommendedSuggestions.getByRandomly()[index];
+        final key = recommendedSuggestions.get()[index];
         return buildRecommendedSuggestionsByDismissible(key,index);
       },
     );
