@@ -2,26 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:self_suggestion/view/commonConstant/CommonMSGConstant.dart';
 
 import '../model/Notifications.dart';
-import 'NotificationSetScreen.dart';
+import '../model/RecommendedSuggestions.dart';
 
-class NotificationListScreen extends StatefulWidget {
-  const NotificationListScreen({Key? key}) : super(key: key);
+class RecommendedSuggestionListScreen extends StatefulWidget {
+  const RecommendedSuggestionListScreen({Key? key}) : super(key: key);
 
   @override
-  _NotificationListScreenState createState() => _NotificationListScreenState();
+  _RecommendedSuggestionListScreenState createState() => _RecommendedSuggestionListScreenState();
 }
 
-class _NotificationListScreenState extends State<NotificationListScreen> {
-  final Notifications notifications = Notifications();
+class _RecommendedSuggestionListScreenState extends State<RecommendedSuggestionListScreen> {
+  final RecommendedSuggestions recommendedSuggestions = RecommendedSuggestions();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        //화면 여백 SafeArea
+      //화면 여백 SafeArea
         child: Scaffold(
-      appBar: buildAppBar(context),
-      body: buildBody(notifications, context),
-    ));
+          appBar: buildAppBar(context),
+          body: buildBody(recommendedSuggestions, context),
+        ));
   }
 
   PreferredSizeWidget buildAppBar(BuildContext context) {
@@ -32,29 +32,30 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
     );
   }
 
-  Widget buildBody(Notifications notifications, BuildContext context) {
-    if (notifications.get().isEmpty) return Center(child: Text(''));
+  Widget buildBody(RecommendedSuggestions recommendedSuggestions, BuildContext context) {
+    if (recommendedSuggestions.get().isEmpty) return Center(child: Text(''));
 
     return ListView.builder(
-      itemCount: notifications.get().length,
+      itemCount: recommendedSuggestions.get().length,
       itemExtent: MediaQuery.of(context).size.height / 10,
       itemBuilder: (BuildContext context, int index) {
-        final key = notifications.get().keys.elementAt(index);
-        return buildNotificationsByDismissible(key);
+        final key = recommendedSuggestions.get()[index];
+        return buildRecommendedSuggestionsByDismissible(key,index);
       },
     );
   }
 
-  Widget buildNotificationsByDismissible(String key) {
+  Widget buildRecommendedSuggestionsByDismissible(String key, int index) {
     return Dismissible(
       key: Key(key),
       background: buildDismissibleBackground(),
-      onDismissed: (direction) async {
-        await notifications.delete(key);
+      onDismissed: (direction) {
+        recommendedSuggestions.addToSuggestions(index);
+        recommendedSuggestions.delete(index);
         setState(() {});
       },
       //direction: DismissDirection.endToStart,
-      child: buildNotificationsPart(key),
+      child: buildRecommendedSuggestionsPart(key),
     );
   }
 
@@ -73,12 +74,12 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
           // 삭제 버튼이 눌렸을 때 실행되는 코드
         },
         child: Container(
-          color: Colors.redAccent,
+          color: Colors.blueAccent,
           child: Stack(
             children: [
               Center(
                 child: Icon(
-                  Icons.delete,
+                  Icons.add,
                   color: Colors.white,
                   size: 30.0,
                 ),
@@ -90,7 +91,7 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
     );
   }
 
-  Widget buildNotificationsPart(String key) {
+  Widget buildRecommendedSuggestionsPart(String key) {
     return Container(
       decoration: BoxDecoration(
         border: Border(
@@ -100,11 +101,11 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
           ),
         ),
       ),
-      child: buildNotificationsTile(key),
+      child: buildRecommendedSuggestionsTile(key),
     );
   }
 
-  Widget buildNotificationsTile(String key) {
+  Widget buildRecommendedSuggestionsTile(String key) {
     return Center(
       child: ListTile(
         title: Text(key),
