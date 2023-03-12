@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:self_suggestion/model/Suggestions.dart';
-import 'package:self_suggestion/model/UserChecker.dart';
 import 'package:self_suggestion/util/TimzoneGenerator.dart';
 import 'package:self_suggestion/view/StarterScreen.dart';
-import '/view/HomeScreen.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
