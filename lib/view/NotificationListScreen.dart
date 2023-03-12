@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:self_suggestion/view/commonConstant/CommonMSGConstant.dart';
 
 import '../model/Notifications.dart';
+import '../util/AdManager.dart';
 import 'HomeScreen.dart';
 import 'NotificationSetScreen.dart';
 
@@ -22,9 +23,8 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
         child: Scaffold(
       appBar: buildAppBar(context),
       body: buildBody(notifications, context),
-          bottomNavigationBar: buildBottomAppBar(),
-
-        ));
+      bottomNavigationBar: buildBottomAppBar(),
+    ));
   }
 
   PreferredSizeWidget buildAppBar(BuildContext context) {
@@ -41,16 +41,26 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
   }
 
   Widget buildBody(Notifications notifications, BuildContext context) {
-    if (notifications.get().isEmpty) return Center(child: Text(''));
+    if (notifications.get().isEmpty)
+      return Column(children: [
+        AdManager.getAdBanner(),
+        Expanded(child: Center(child: Text(''))),
+        AdManager.getAdBanner(),
+      ]);
 
-    return ListView.builder(
-      itemCount: notifications.get().length,
-      itemExtent: MediaQuery.of(context).size.height / 10,
-      itemBuilder: (BuildContext context, int index) {
-        final key = notifications.get().keys.elementAt(index);
-        return buildNotificationsByDismissible(key);
-      },
-    );
+    return Column(children: [
+      AdManager.getAdBanner(),
+      Expanded(
+          child: ListView.builder(
+        itemCount: notifications.get().length,
+        itemExtent: MediaQuery.of(context).size.height / 10,
+        itemBuilder: (BuildContext context, int index) {
+          final key = notifications.get().keys.elementAt(index);
+          return buildNotificationsByDismissible(key);
+        },
+      )),
+      AdManager.getAdBanner(),
+    ]);
   }
 
   Widget buildNotificationsByDismissible(String key) {
@@ -101,6 +111,7 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
   Widget buildNotificationsPart(String key) {
     return Container(
       decoration: BoxDecoration(
+        color: Colors.white,
         border: Border(
           bottom: BorderSide(
             color: Colors.black,
@@ -115,16 +126,18 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
   Widget buildNotificationsTile(String key) {
     return Center(
       child: ListTile(
-        title: Text(key),
+        title: Text(key,
+            style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width / 40,
+                fontWeight: FontWeight.bold)),
       ),
     );
   }
 
-
   Widget buildBottomAppBar() {
     return BottomAppBar(
       height: MediaQuery.of(context).size.height / 10,
-      color: Color.fromRGBO(11,27,50,1.0),
+      color: Color.fromRGBO(11, 27, 50, 1.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -152,9 +165,7 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
           ),
           IconButton(
             icon: Icon(Icons.alarm_off, color: Colors.blueAccent),
-            onPressed: () {
-
-            },
+            onPressed: () {},
           ),
         ],
       ),

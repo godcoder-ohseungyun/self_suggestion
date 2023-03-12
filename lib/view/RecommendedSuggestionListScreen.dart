@@ -4,6 +4,7 @@ import 'package:self_suggestion/view/commonConstant/CommonMSGConstant.dart';
 
 import '../model/Notifications.dart';
 import '../model/RecommendedSuggestions.dart';
+import '../util/AdManager.dart';
 import 'NotificationListScreen.dart';
 import 'NotificationSetScreen.dart';
 
@@ -11,27 +12,30 @@ class RecommendedSuggestionListScreen extends StatefulWidget {
   const RecommendedSuggestionListScreen({Key? key}) : super(key: key);
 
   @override
-  _RecommendedSuggestionListScreenState createState() => _RecommendedSuggestionListScreenState();
+  _RecommendedSuggestionListScreenState createState() =>
+      _RecommendedSuggestionListScreenState();
 }
 
-class _RecommendedSuggestionListScreenState extends State<RecommendedSuggestionListScreen> {
-  final RecommendedSuggestions recommendedSuggestions = RecommendedSuggestions();
+class _RecommendedSuggestionListScreenState
+    extends State<RecommendedSuggestionListScreen> {
+  final RecommendedSuggestions recommendedSuggestions =
+      RecommendedSuggestions();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      //화면 여백 SafeArea
+        //화면 여백 SafeArea
         child: Scaffold(
-          appBar: buildAppBar(context),
-          body: buildBody(recommendedSuggestions, context),
-          bottomNavigationBar: buildBottomAppBar(),
-        ));
+      appBar: buildAppBar(context),
+      body: buildBody(recommendedSuggestions, context),
+      bottomNavigationBar: buildBottomAppBar(),
+    ));
   }
 
   PreferredSizeWidget buildAppBar(BuildContext context) {
     return AppBar(
       title: Text(CommonMSGConstant.APP_BAR_TITLE),
-      backgroundColor: Color.fromRGBO(11,27,50,1.0),
+      backgroundColor: Color.fromRGBO(11, 27, 50, 1.0),
       leading: IconButton(
         icon: Icon(Icons.menu_book),
         onPressed: () {
@@ -41,24 +45,34 @@ class _RecommendedSuggestionListScreenState extends State<RecommendedSuggestionL
       actions: [
         IconButton(
           icon: Icon(Icons.menu, color: Colors.blueAccent),
-          onPressed: () {
-          },
+          onPressed: () {},
         ),
       ],
     );
   }
 
-  Widget buildBody(RecommendedSuggestions recommendedSuggestions, BuildContext context) {
-    if (recommendedSuggestions.get().isEmpty) return Center(child: Text(''));
+  Widget buildBody(
+      RecommendedSuggestions recommendedSuggestions, BuildContext context) {
+    if (recommendedSuggestions.get().isEmpty)
+      return Column(children: [
+        AdManager.getAdBanner(),
+        Expanded(child: Center(child: Text(''))),
+        AdManager.getAdBanner(),
+      ]);
 
-    return ListView.builder(
-      itemCount: recommendedSuggestions.get().length,
-      itemExtent: MediaQuery.of(context).size.height / 10,
-      itemBuilder: (BuildContext context, int index) {
-        final key = recommendedSuggestions.get()[index];
-        return buildRecommendedSuggestionsByDismissible(key,index);
-      },
-    );
+    return Column(children: [
+      AdManager.getAdBanner(),
+      Expanded(
+          child: ListView.builder(
+        itemCount: recommendedSuggestions.get().length,
+        itemExtent: MediaQuery.of(context).size.height / 10,
+        itemBuilder: (BuildContext context, int index) {
+          final key = recommendedSuggestions.get()[index];
+          return buildRecommendedSuggestionsByDismissible(key, index);
+        },
+      )),
+      AdManager.getAdBanner()
+    ]);
   }
 
   Widget buildRecommendedSuggestionsByDismissible(String key, int index) {
@@ -110,6 +124,7 @@ class _RecommendedSuggestionListScreenState extends State<RecommendedSuggestionL
   Widget buildRecommendedSuggestionsPart(String key) {
     return Container(
       decoration: BoxDecoration(
+        color: Colors.white,
         border: Border(
           bottom: BorderSide(
             color: Colors.black,
@@ -124,17 +139,17 @@ class _RecommendedSuggestionListScreenState extends State<RecommendedSuggestionL
   Widget buildRecommendedSuggestionsTile(String key) {
     return Center(
       child: ListTile(
-        title: Text(key),
-      ),
+          title: Text(key,
+              style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width / 40,
+                  fontWeight: FontWeight.bold))),
     );
   }
-
-
 
   Widget buildBottomAppBar() {
     return BottomAppBar(
       height: MediaQuery.of(context).size.height / 10,
-      color: Color.fromRGBO(11,27,50,1.0),
+      color: Color.fromRGBO(11, 27, 50, 1.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

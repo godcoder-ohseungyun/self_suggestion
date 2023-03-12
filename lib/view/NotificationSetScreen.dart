@@ -5,6 +5,7 @@ import '../model/Suggestions.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import '../model/OfflineNotification.dart';
+import '../util/AdManager.dart';
 import '../util/NotificationManager.dart';
 import 'HomeScreen.dart';
 import 'NotificationListScreen.dart';
@@ -18,7 +19,6 @@ class NotificationSetScreen extends StatefulWidget {
 }
 
 class _NotificationSetScreenState extends State<NotificationSetScreen> {
-
   static final String NO_ACTIVATED_SUGGETIONS_MSG = "활성화된 문구가 없습니다.";
   static final String RESERVATION_COMPLETE_MSG = "알림 예약 완료!";
 
@@ -45,7 +45,7 @@ class _NotificationSetScreenState extends State<NotificationSetScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(CommonMSGConstant.APP_BAR_TITLE),
-        backgroundColor: Color.fromRGBO(11,27,50,1.0),
+        backgroundColor: Color.fromRGBO(11, 27, 50, 1.0),
         leading: IconButton(
           icon: Icon(Icons.menu_book),
           onPressed: () {
@@ -53,92 +53,94 @@ class _NotificationSetScreenState extends State<NotificationSetScreen> {
           },
         ),
       ),
-      body: Stack(
-        children: [
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Transform.rotate(
-                  angle: 0,
-                  child: SizedBox(
-                    height: 400,
-                    width: 400,
-                    child: CupertinoTimerPicker(
-                      mode: CupertinoTimerPickerMode.hm,
-                      minuteInterval: 1,
-                      initialTimerDuration:
-                          Duration(hours: now.hour, minutes: now.minute),
-                      onTimerDurationChanged: (Duration duration) {
-                        setState(() {
-                          selectedTime = tz.TZDateTime(
-                            tz.getLocation(currentTimeZone),
-                            now.year,
-                            now.month,
-                            now.day,
-                            duration.inHours,
-                            duration.inMinutes.remainder(60),
-                          );
-                        });
-                      },
+      body: Column(children: [
+        AdManager.getAdBanner(),
+        Expanded(
+            child: Stack(
+          children: [
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Transform.rotate(
+                    angle: 0,
+                    child: SizedBox(
+                      height: 400,
+                      width: 400,
+                      child: CupertinoTimerPicker(
+                        mode: CupertinoTimerPickerMode.hm,
+                        minuteInterval: 1,
+                        initialTimerDuration:
+                            Duration(hours: now.hour, minutes: now.minute),
+                        onTimerDurationChanged: (Duration duration) {
+                          setState(() {
+                            selectedTime = tz.TZDateTime(
+                              tz.getLocation(currentTimeZone),
+                              now.year,
+                              now.month,
+                              now.day,
+                              duration.inHours,
+                              duration.inMinutes.remainder(60),
+                            );
+                          });
+                        },
+                      ),
                     ),
                   ),
-                ),
 
-                SizedBox(height: 20),
-                // "저장" 버튼
-                ElevatedButton(
-                  onPressed: () async {
-                    if (!await NotificationManager.saveNotification(
-                        selectedTime)) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(NO_ACTIVATED_SUGGETIONS_MSG),
-                          duration: Duration(seconds: 1),
-                          backgroundColor: Colors.grey,
-                        ),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(RESERVATION_COMPLETE_MSG),
-                          duration: Duration(seconds: 1),
-                          backgroundColor: Colors.grey,
-                        ),
-                      );
-                    }
-                  },
-                  child: Text(CommonMSGConstant.SAVE,
-                      style: TextStyle(color: Colors.white)),
-                  style: ElevatedButton.styleFrom(
-                    primary: Color.fromRGBO(11,27,50,1.0),
-                    fixedSize: null,
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                  SizedBox(height: 20),
+                  // "저장" 버튼
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (!await NotificationManager.saveNotification(
+                          selectedTime)) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(NO_ACTIVATED_SUGGETIONS_MSG),
+                            duration: Duration(seconds: 1),
+                            backgroundColor: Colors.grey,
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(RESERVATION_COMPLETE_MSG),
+                            duration: Duration(seconds: 1),
+                            backgroundColor: Colors.grey,
+                          ),
+                        );
+                      }
+                    },
+                    child: Text(CommonMSGConstant.SAVE,
+                        style: TextStyle(color: Colors.white)),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(11, 27, 50, 1.0),
+                      fixedSize: null,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        )),
+        AdManager.getAdBanner(),
+      ]),
       bottomNavigationBar: buildBottomAppBar(),
     );
   }
 
-
-
   Widget buildBottomAppBar() {
     return BottomAppBar(
       height: MediaQuery.of(context).size.height / 10,
-      color: Color.fromRGBO(11,27,50,1.0),
+      color: Color.fromRGBO(11, 27, 50, 1.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
             icon: Icon(Icons.alarm, color: Colors.blueAccent),
-            onPressed: () {
-
-            },
+            onPressed: () {},
           ),
           IconButton(
             icon: Icon(Icons.home, color: Colors.white),
