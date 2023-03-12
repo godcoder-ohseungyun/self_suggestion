@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:self_suggestion/model/Suggestions.dart';
@@ -17,6 +18,10 @@ void main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp, // 세로 모드만 허용
   ]);
+
+  // Run this before displaying any ad.
+  Admob.initialize();
+  await Admob.requestTrackingAuthorization();
 
   tz.initializeTimeZones();
 
