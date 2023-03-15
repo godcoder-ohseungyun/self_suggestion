@@ -24,7 +24,7 @@ class NotificationManager{
       var notificationId = selectedTime.millisecondsSinceEpoch ~/ 1000 + i;
       await offlineNotification.showScheduledNotification(
           id: notificationId,
-          title: '안녕',
+          title: 'MEMO MIND',
           body: notificationMessages[i],
           selectedTime: selectedTime);
     }

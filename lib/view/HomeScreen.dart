@@ -17,9 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final Suggestions suggestions = new Suggestions();
 
   static final String BODY_WELCOME_MSG = "반가워요! 나의 마음들을 채워볼까요?";
-  static final String NEW_LINE = "\n";
-  static final String BODY_GUIDE_MSG_COMMON =
-      "각 탭 좌측 상단에 '책 아이콘'을 누르면, 사용법을 볼 수 있어요!";
   static final String DIALOG_TITLE = "매일 되새길 마음을 적어주세요";
   static final String DIALOG_EXPLAIN_MSG = "write it here";
 
@@ -70,11 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(BODY_WELCOME_MSG,
-                style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width / 40,
-                    fontWeight: FontWeight.bold)),
-            Text(NEW_LINE),
-            Text(BODY_GUIDE_MSG_COMMON,
                 style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width / 40,
                     fontWeight: FontWeight.bold)),

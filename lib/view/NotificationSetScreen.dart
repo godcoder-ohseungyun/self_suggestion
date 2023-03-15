@@ -20,7 +20,7 @@ class NotificationSetScreen extends StatefulWidget {
 
 class _NotificationSetScreenState extends State<NotificationSetScreen> {
   static final String NO_ACTIVATED_SUGGETIONS_MSG = "활성화된 문구가 없습니다.";
-  static final String RESERVATION_COMPLETE_MSG = "알림 예약 완료!";
+  static final String RESERVATION_COMPLETE_MSG = "알람 예약 완료!";
 
   late final Suggestions suggestions;
   late final OfflineNotification offlineNotification;
@@ -46,12 +46,6 @@ class _NotificationSetScreenState extends State<NotificationSetScreen> {
       appBar: AppBar(
         title: Text(CommonMSGConstant.APP_BAR_TITLE),
         backgroundColor: Color.fromRGBO(11, 27, 50, 1.0),
-        leading: IconButton(
-          icon: Icon(Icons.menu_book),
-          onPressed: () {
-            // Add your onPressed logic here
-          },
-        ),
       ),
       body: Column(children: [
         AdManager.getAdBanner(),
