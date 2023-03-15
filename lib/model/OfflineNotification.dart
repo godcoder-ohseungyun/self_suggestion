@@ -94,7 +94,7 @@ class OfflineNotification {
       id,
       title,
       body,
-      selectedTime,
+      selectedTime.add(Duration(seconds: 5)),
       details,
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
