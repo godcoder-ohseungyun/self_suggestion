@@ -36,12 +36,6 @@ class _RecommendedSuggestionListScreenState
     return AppBar(
       title: Text(CommonMSGConstant.APP_BAR_TITLE),
       backgroundColor: Color.fromRGBO(11, 27, 50, 1.0),
-      leading: IconButton(
-        icon: Icon(Icons.menu_book),
-        onPressed: () {
-          // Add your onPressed logic here
-        },
-      ),
       actions: [
         IconButton(
           icon: Icon(Icons.menu, color: Colors.blueAccent),

@@ -31,12 +31,6 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
     return AppBar(
       title: Text(CommonMSGConstant.APP_BAR_TITLE),
       backgroundColor: Color.fromRGBO(11, 27, 50, 1.0),
-      leading: IconButton(
-        icon: Icon(Icons.menu_book),
-        onPressed: () {
-          // Add your onPressed logic here
-        },
-      ),
     );
   }
 
@@ -44,7 +38,12 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
     if (notifications.get().isEmpty)
       return Column(children: [
         AdManager.getAdBanner(),
-        Expanded(child: Center(child: Text(''))),
+        Expanded(
+            child: Center(
+                child: Text('등록된 알람이 없어요!',
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width / 40,
+                        fontWeight: FontWeight.bold)))),
         AdManager.getAdBanner(),
       ]);
 
